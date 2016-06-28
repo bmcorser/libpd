@@ -47,10 +47,6 @@ void init(){
    // send DSP 1 message to pd
    lpd.computeAudio(true);
 
-   // load the patch
-   pd::Patch patch = lpd.openPatch("test.pd", "./pd");
-   std::cout << patch << std::endl;
-
    // Use the RtAudio API to connect to the default audio device.
    if(audio.getDeviceCount()==0){
       std::cout << "There are no available sound devices." << std::endl;
@@ -75,6 +71,13 @@ void init(){
       std::cerr << e.getMessage() << std::endl;
       exit(1);
    }
+
+   // load the patches
+   std::vector<pd::Patch> patches;
+   for (int i = 0; i < 100; i++) {
+      patches.push_back(lpd.openPatch("test.pd", "./pd"));
+   }
+   std::cerr << "loaded " << patches.size() << " patches" << std::endl;
 }
 
 
